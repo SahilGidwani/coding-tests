@@ -4,3 +4,49 @@
  * @file
  * Install, update and uninstall functions for the Movie Ratings module.
  */
+
+/**
+ * Implements hook_schema()
+ */
+function movie_ratings_schema()
+{
+  $schema['movie_ratings'] = [
+    'description' => 'Schema for storing movie ratings',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary key and unique rating ID',
+      ],
+      'movie_id' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'description' => 'Node ID of the movie',
+      ],
+      'rating' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'description' => 'User rating value',
+      ],
+      'user_ip' => [
+        'type' => 'varchar',
+        'length' => 45,
+        'not null' => TRUE,
+        'description' => 'IP address of the user',
+      ],
+      'created' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'description' => 'Timestamp when rating was created',
+      ],
+    ],
+    'primary key' => ['id'],
+    'indexes' => [
+      'movie_id' => ['movie_id'],
+      'movie_rating' => ['movie_id', 'rating'],
+      'ip_movie' => ['user_ip', 'movie_id'],
+    ],
+  ];
+
+  return $schema;
+}

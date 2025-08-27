@@ -4,3 +4,108 @@
  * @file
  * Primary module hooks for Movie Ratings module.
  */
+
+/**
+ * Implements hook_views_data().
+ *
+ * This function integrates the custom movie ratings table with the views data
+ * so that we can implement the views with movie ratings.
+ */
+function movie_ratings_views_data() {
+  $data = [];
+
+  // Defines the base table and group.
+  $data['movie_ratings']['table']['group'] = t('Movie Ratings');
+  $data['movie_ratings']['table']['base'] = [
+    'field' => 'id',
+    'title' => t('Movie Ratings'),
+    'help' => t('Movie ratings data to use in the views.'),
+  ];
+
+  // Maps rating ID field with the ID column in ratings table
+  $data['movie_ratings']['id'] = [
+    'title' => t('Rating ID'),
+    'help' => t('The ID of individual rating'),
+    'field' => [
+      'id' => 'numeric',
+    ],
+    'sort' => [
+      'id' => 'standard',
+    ],
+  ];
+
+  // Maps rating value field with the value column in ratings table
+  $data['movie_ratings']['rating'] = [
+    'title' => t('Rating'),
+    'help' => t('Movie rating value (1-5)'),
+    'field' => [
+      'id' => 'numeric',
+    ],
+    'sort' => [
+      'id' => 'standard',
+    ],
+    'filter' => [
+      'id' => 'numeric',
+    ],
+  ];
+
+  // Maps rating date field with the created column in ratings table.
+  $data['movie_ratings']['created'] = [
+    'title' => t('Rating Date'),
+    'help' => t('When the rating was submitted'),
+    'field' => [
+      'id' => 'date',
+    ],
+    'sort' => [
+      'id' => 'date',
+    ],
+    'filter' => [
+      'id' => 'date',
+    ],
+  ];
+
+  // Maps user IP field with the user_ip column in ratings table
+  $data['movie_ratings']['user_ip'] = [
+    'title' => t('User IP'),
+    'help' => t('IP address of the user who rated'),
+    'field' => [
+      'id' => 'standard',
+    ],
+    'filter' => [
+      'id' => 'string',
+    ],
+  ];
+
+  // Defines relationship from ratings to movies
+  $data['movie_ratings']['movie_id'] = [
+    'title' => t('Movie'),
+    'help' => t('The movie being rated'),
+    'relationship' => [
+      'base' => 'node_field_data',
+      'base field' => 'nid',
+      'id' => 'standard',
+      'label' => t('Movie from rating'),
+    ],
+    'argument' => [
+      'id' => 'numeric',
+    ],
+    'filter' => [
+      'id' => 'numeric',
+    ],
+  ];
+
+  // Defines relationship from movies to ratings
+  $data['node_field_data']['movie_ratings'] = [
+    'title' => t('Movie Ratings'),
+    'help' => t('Ratings for this movie'),
+    'relationship' => [
+      'base' => 'movie_ratings',
+      'base field' => 'movie_id',
+      'field' => 'nid',
+      'id' => 'standard',
+      'label' => t('Movie ratings'),
+    ],
+  ];
+
+  return $data;
+}

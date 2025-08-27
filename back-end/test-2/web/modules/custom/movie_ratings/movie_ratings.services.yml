@@ -1,0 +1,4 @@
+services:
+  movie_ratings.service:
+    class: Drupal\movie_ratings\MovieRatingService
+    arguments: ['@database', '@current_user', '@request_stack', '@datetime.time', '@logger.factory']
