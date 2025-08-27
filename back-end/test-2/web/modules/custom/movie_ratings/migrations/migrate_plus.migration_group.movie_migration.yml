@@ -1,0 +1,4 @@
+id: movie_migration
+label: 'Movie Data Migration'
+description: 'Migration group for importing movies, directors, actors and categories from JSON'
+source_type: 'JSON files'

@@ -1,0 +1,71 @@
+id: movie_nodes
+label: 'Movies'
+migration_group: movie_migration
+migration_dependencies:
+  required:
+    - movie_categories
+    - movie_directors
+    - movie_actors
+
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls: 'modules/custom/movie_ratings/migrate/movies.json'
+  item_selector: /movies
+  fields:
+    - name: id
+      label: 'Movie ID'
+      selector: id
+    - name: title
+      label: 'Title'
+      selector: title
+    - name: year
+      label: 'Year'
+      selector: year
+    - name: description
+      label: 'Description'
+      selector: description
+    - name: directors
+      label: 'Directors'
+      selector: directors
+    - name: actors
+      label: 'Actors'
+      selector: actors
+    - name: categories
+      label: 'Categories'
+      selector: categories
+  ids:
+    id:
+      type: integer
+
+process:
+  title: title
+  field_year_of_release: year
+  body/value: description
+  body/format:
+    plugin: default_value
+    default_value: basic_html
+  status:
+    plugin: default_value
+    default_value: 1
+
+  # Directors - Multi-valued entity reference
+  field_director:
+    plugin: migration_lookup
+    migration: movie_directors
+    source: directors
+
+  field_actor:
+    plugin: migration_lookup
+    migration: movie_actors
+    source: actors
+
+  field_category:
+    plugin: migration_lookup
+    migration: movie_categories
+    source: categories
+
+destination:
+  plugin: 'entity:node'
+  default_bundle: movies

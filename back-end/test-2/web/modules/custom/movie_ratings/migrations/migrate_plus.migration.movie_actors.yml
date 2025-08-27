@@ -1,0 +1,34 @@
+id: movie_actors
+label: 'Movie Actors'
+migration_group: movie_migration
+
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls: 'modules/custom/movie_ratings/migrate/actors.json'
+  item_selector: /actors
+  fields:
+    - name: id
+      label: 'Actor ID'
+      selector: id
+    - name: name
+      label: 'Actor Name'
+      selector: name
+    - name: bio
+      label: 'Biography'
+      selector: bio
+  ids:
+    id:
+      type: integer
+
+process:
+  title: name
+  body: bio
+  status:
+    plugin: default_value
+    default_value: 1
+
+destination:
+  plugin: 'entity:node'
+  default_bundle: actors

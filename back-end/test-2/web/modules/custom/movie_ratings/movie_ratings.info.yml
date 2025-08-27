@@ -1,0 +1,9 @@
+name: 'Movie Ratings'
+type: module
+description: 'This module allows users to add movie ratings and displays average rating for each movie.'
+package: Custom
+core_version_requirement: ^10 || ^11
+dependencies:
+  - drupal:migrate_plus
+  - drupal:migrate_source_csv
+  - drupal:migrate_tools

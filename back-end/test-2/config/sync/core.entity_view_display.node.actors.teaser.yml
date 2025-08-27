@@ -1,0 +1,30 @@
+uuid: b9a26356-9939-4cdd-84c0-ed03cd75be5a
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.actors.body
+    - node.type.actors
+  module:
+    - text
+    - user
+id: node.actors.teaser
+targetEntityType: node
+bundle: actors
+mode: teaser
+content:
+  body:
+    type: text_summary_or_trimmed
+    label: hidden
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

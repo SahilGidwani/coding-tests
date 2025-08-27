@@ -1,0 +1,39 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "Action",
+      "description": "Movies featuring intense sequences, stunts, and high energy."
+    },
+    {
+      "id": 2,
+      "name": "Drama",
+      "description": "Character-driven stories focusing on realistic situations."
+    },
+    {
+      "id": 3,
+      "name": "Comedy",
+      "description": "Humorous and entertaining films designed to make audiences laugh."
+    },
+    {
+      "id": 4,
+      "name": "Crime",
+      "description": "Movies involving criminal activities, investigations, and law enforcement."
+    },
+    {
+      "id": 5,
+      "name": "Thriller",
+      "description": "Suspenseful films designed to keep audiences on the edge of their seats."
+    },
+    {
+      "id": 6,
+      "name": "Sci-Fi",
+      "description": "Science fiction films featuring futuristic concepts and technology."
+    },
+    {
+      "id": 7,
+      "name": "Romance",
+      "description": "Love stories and romantic relationships as central themes."
+    }
+  ]
+}

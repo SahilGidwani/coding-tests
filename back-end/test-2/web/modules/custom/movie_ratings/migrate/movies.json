@@ -1,0 +1,49 @@
+{
+  "movies": [
+    {
+      "id": 1,
+      "title": "Inception",
+      "year": 2010,
+      "description": "A thief who enters people's dreams gets a chance at redemption.",
+      "directors": [1],
+      "actors": [1, 2, 10],
+      "categories": [1, 5, 6]
+    },
+    {
+      "id": 2,
+      "title": "The Dark Knight",
+      "year": 2008,
+      "description": "Batman faces the Joker in this dark superhero tale.",
+      "directors": [1],
+      "actors": [2, 3],
+      "categories": [1, 4, 2]
+    },
+    {
+      "id": 3,
+      "title": "Pulp Fiction",
+      "year": 1994,
+      "description": "Interconnected stories of Los Angeles criminals.",
+      "directors": [2],
+      "actors": [4, 5, 6],
+      "categories": [4, 2]
+    },
+    {
+      "id": 4,
+      "title": "The Shawshank Redemption",
+      "year": 1994,
+      "description": "Two imprisoned men bond over years.",
+      "directors": [5],
+      "actors": [7, 8],
+      "categories": [2]
+    },
+    {
+      "id": 5,
+      "title": "Goodfellas",
+      "year": 1990,
+      "description": "The story of a man's rise and fall in the mob.",
+      "directors": [3],
+      "actors": [9, 5],
+      "categories": [4, 2]
+    }
+  ]
+}

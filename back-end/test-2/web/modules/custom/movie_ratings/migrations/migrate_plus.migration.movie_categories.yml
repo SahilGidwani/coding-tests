@@ -1,0 +1,31 @@
+id: movie_categories
+label: 'Movie Categories'
+migration_group: movie_migration
+
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls: 'modules/custom/movie_ratings/migrate/categories.json'
+  item_selector: /categories
+  fields:
+    - name: id
+      label: 'Category ID'
+      selector: id
+    - name: name
+      label: 'Category Name'
+      selector: name
+    - name: description
+      label: 'Description'
+      selector: description
+  ids:
+    id:
+      type: integer
+
+process:
+  name: name
+  description: description
+
+destination:
+  plugin: 'entity:taxonomy_term'
+  default_bundle: categories

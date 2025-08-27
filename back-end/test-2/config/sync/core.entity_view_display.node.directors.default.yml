@@ -1,0 +1,28 @@
+uuid: f8ae40a3-f8c5-4a62-b0a6-1200b0b1a76d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.directors.body
+    - node.type.directors
+  module:
+    - text
+    - user
+id: node.directors.default
+targetEntityType: node
+bundle: directors
+mode: default
+content:
+  body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

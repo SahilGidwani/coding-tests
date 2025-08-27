@@ -1,0 +1,34 @@
+id: movie_directors
+label: 'Movie Directors'
+migration_group: movie_migration
+
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls: 'modules/custom/movie_ratings/migrate/directors.json'
+  item_selector: /directors
+  fields:
+    - name: id
+      label: 'Director ID'
+      selector: id
+    - name: name
+      label: 'Director Name'
+      selector: name
+    - name: bio
+      label: 'Biography'
+      selector: bio
+  ids:
+    id:
+      type: integer
+
+process:
+  title: name
+  body: bio
+  status:
+    plugin: default_value
+    default_value: 1
+
+destination:
+  plugin: 'entity:node'
+  default_bundle: directors

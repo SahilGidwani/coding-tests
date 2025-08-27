@@ -1,0 +1,24 @@
+uuid: bfde35a6-512f-4cb6-b5a3-ec47633c4723
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.directors
+  module:
+    - text
+id: node.directors.body
+field_name: body
+entity_type: node
+bundle: directors
+label: Bio
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+  required_summary: false
+  allowed_formats: {  }
+field_type: text_with_summary

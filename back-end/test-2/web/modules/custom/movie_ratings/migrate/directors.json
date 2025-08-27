@@ -1,0 +1,29 @@
+{
+  "directors": [
+    {
+      "id": 1,
+      "name": "Christopher Nolan",
+      "bio": "British-American filmmaker known for complex narratives and innovative visual techniques."
+    },
+    {
+      "id": 2,
+      "name": "Quentin Tarantino",
+      "bio": "American director known for nonlinear storylines and pop culture references."
+    },
+    {
+      "id": 3,
+      "name": "Martin Scorsese",
+      "bio": "American filmmaker and film historian, master of crime and drama films."
+    },
+    {
+      "id": 4,
+      "name": "Steven Spielberg",
+      "bio": "American filmmaker and business magnate, pioneer of modern blockbuster."
+    },
+    {
+      "id": 5,
+      "name": "Frank Darabont",
+      "bio": "American film director and screenwriter known for Stephen King adaptations."
+    }
+  ]
+}

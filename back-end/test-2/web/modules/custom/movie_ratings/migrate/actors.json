@@ -1,0 +1,54 @@
+{
+  "actors": [
+    {
+      "id": 1,
+      "name": "Leonardo DiCaprio",
+      "bio": "American actor and film producer known for intense character portrayals."
+    },
+    {
+      "id": 2,
+      "name": "Christian Bale",
+      "bio": "English actor known for his method acting and physical transformations."
+    },
+    {
+      "id": 3,
+      "name": "Heath Ledger",
+      "bio": "Australian actor remembered for his iconic portrayal of the Joker."
+    },
+    {
+      "id": 4,
+      "name": "John Travolta",
+      "bio": "American actor and singer, known for roles in Pulp Fiction and Grease."
+    },
+    {
+      "id": 5,
+      "name": "Samuel L. Jackson",
+      "bio": "American actor and producer with over 150 film credits."
+    },
+    {
+      "id": 6,
+      "name": "Uma Thurman",
+      "bio": "American actress known for her roles in Pulp Fiction and Kill Bill."
+    },
+    {
+      "id": 7,
+      "name": "Tom Hanks",
+      "bio": "American actor and filmmaker known for his versatile dramatic roles."
+    },
+    {
+      "id": 8,
+      "name": "Morgan Freeman",
+      "bio": "American actor and film narrator with distinctive deep voice."
+    },
+    {
+      "id": 9,
+      "name": "Robert De Niro",
+      "bio": "American actor and producer, considered one of the greatest actors of all time."
+    },
+    {
+      "id": 10,
+      "name": "Marion Cotillard",
+      "bio": "French actress and singer, Academy Award winner."
+    }
+  ]
+}
