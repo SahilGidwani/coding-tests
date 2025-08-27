@@ -1,0 +1,8 @@
+movie_ratings.test_form:
+  path: '/movie-rating-test/{movie_id}'
+  defaults:
+    _form: 'Drupal\movie_ratings\Form\MovieRatingForm'
+    _title: 'Test Movie Rating Form'
+  requirements:
+    _permission: 'access content'
+    movie_id: \d+

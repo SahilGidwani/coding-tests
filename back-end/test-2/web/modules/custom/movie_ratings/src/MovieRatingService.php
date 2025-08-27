@@ -9,7 +9,7 @@ use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 
 
-class MovieRating {
+class MovieRatingService {
 
   /**
    * Databse connection
@@ -105,13 +105,16 @@ class MovieRating {
   /**
    * This function checks if user has already rated the movie with current IP.
    */
-  public function hasUserAlreadyRated($movieId, $userIp)
-  {
+  public function hasUserAlreadyRated($movieId, $userIp = NULL) {
+
+    if ($userIp === NULL) {
+      $userIp = $this->request->getCurrentRequest()->getClientIp();
+    }
 
     // Search if user has already rated the movie with current IP.
     $searchQuery = $this->database->select('movie_ratings', 'mr')
       ->condition('movie_id', $movieId)
-      ->condition('user_id', $userIp)
+      ->condition('user_ip', $userIp)
       ->countQuery();
 
     // If query returns result then return TRUE otherwise return FALSE

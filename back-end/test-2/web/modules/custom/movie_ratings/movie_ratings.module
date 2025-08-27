@@ -109,3 +109,21 @@ function movie_ratings_views_data() {
 
   return $data;
 }
+
+/**
+ * Implements hook_theme().
+ */
+function movie_ratings_theme() {
+  return [
+    'movie_rating_block' => [
+      'variables' => [
+        'movie_id' => NULL,
+        'movie_title' => NULL,
+        'average_rating' => 0,
+        'total_votes' => 0,
+        'rating_form' => NULL,
+      ],
+      'template' => 'movie-rating-block',
+    ],
+  ];
+}

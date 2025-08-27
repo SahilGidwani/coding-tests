@@ -1,0 +1,10 @@
+rating_form:
+  version: 1.x
+  css:
+    theme:
+      css/rating-form.css: {}
+  js:
+    js/rating-form.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
