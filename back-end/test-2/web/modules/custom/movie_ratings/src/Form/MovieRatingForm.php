@@ -9,6 +9,7 @@ use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\honeypot\HoneypotService;
 use Drupal\movie_ratings\MovieRatingService;
 
 class MovieRatingForm extends FormBase {
@@ -28,11 +29,19 @@ class MovieRatingForm extends FormBase {
   protected $currentRoute;
 
   /**
+   * Honeypot service object
+   *
+   * @var \Drupal\honeypot\HoneypotService
+   */
+  protected $honeypotService;
+
+  /**
    * Construct MovieRatingForm object
    */
-  public function __construct(MovieRatingService $movieRating, RouteMatchInterface $currentRoute) {
+  public function __construct(MovieRatingService $movieRating, RouteMatchInterface $currentRoute, HoneypotService $honeypotService) {
     $this->movieRating = $movieRating;
     $this->currentRoute = $currentRoute;
+    $this->honeypotService = $honeypotService;
   }
 
   /**
@@ -41,7 +50,8 @@ class MovieRatingForm extends FormBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('movie_ratings.movie_rating_service'),
-      $container->get('current_route_match')
+      $container->get('current_route_match'),
+      $container->get('honeypot')
     );
   }
 
@@ -89,11 +99,11 @@ class MovieRatingForm extends FormBase {
       '#type' => 'radios',
       '#title' => $this->t('Rate this movie'),
       '#options' => [
-        '1' => $this->t('1'),
-        '2' => $this->t('2'),
-        '3' => $this->t('3'),
-        '4' => $this->t('4'),
-        '5' => $this->t('5'),
+        '1' => $this->t('☆'),
+        '2' => $this->t('☆'),
+        '3' => $this->t('☆'),
+        '4' => $this->t('☆'),
+        '5' => $this->t('☆'),
       ],
       '#required' => TRUE,
       '#attributes' => [
@@ -120,6 +130,8 @@ class MovieRatingForm extends FormBase {
     ];
 
     $form['#attached']['library'][] = 'movie_ratings/rating_form';
+
+    $this->honeypotService->addFormProtection($form, $form_state, ['honeypot']);
 
     return $form;
   }
@@ -176,12 +188,14 @@ class MovieRatingForm extends FormBase {
   public function validateForm(array &$form, FormStateInterface $form_state) {
     $rating = $form_state->getValue('rating');
 
-    if (empty($rating)) {
-      $form_state->setErrorByName('rating', $this->t('Please select a rating.'));
+    if (!is_numeric($rating) || $rating < 1 || $rating > 5) {
+      $form_state->setErrorByName('rating', $this->t('Please select a valid rating between 1 and 5.'));
     }
 
-    if ($rating < 1 || $rating > 5) {
-      $form_state->setErrorByName('rating', $this->t('Rating must be between 1 and 5.'));
+    $movie_id = $form_state->getValue('movie_id');
+    if (!is_numeric($movie_id) || $movie_id <= 0) {
+      $form_state->setErrorByName('movie_id', $this->t('Invalid movie ID.'));
     }
   }
 }
+

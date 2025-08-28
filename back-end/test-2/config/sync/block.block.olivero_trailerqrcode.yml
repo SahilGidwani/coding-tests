@@ -1,4 +1,4 @@
-uuid: a70de121-62a3-452a-9cb8-40d09a35c9ef
+uuid: 5a91b430-7f75-4cf7-8454-f073f0cd9145
 langcode: en
 status: true
 dependencies:
@@ -7,15 +7,15 @@ dependencies:
     - node
   theme:
     - olivero
-id: olivero_movieratingblock
+id: olivero_trailerqrcode
 theme: olivero
 region: content_above
-weight: -7
+weight: -8
 provider: null
-plugin: movie_rating_block
+plugin: trailer_qr_block
 settings:
-  id: movie_rating_block
-  label: 'Movie Rating Block'
+  id: trailer_qr_block
+  label: 'Trailer QR Code'
   label_display: '0'
   provider: movie_ratings
 visibility:

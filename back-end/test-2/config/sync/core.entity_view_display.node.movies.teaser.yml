@@ -8,6 +8,7 @@ dependencies:
     - field.field.node.movies.field_actor
     - field.field.node.movies.field_category
     - field.field.node.movies.field_director
+    - field.field.node.movies.field_trailer_url
     - field.field.node.movies.field_year_of_release
     - node.type.movies
   module:
@@ -35,4 +36,5 @@ hidden:
   field_actor: true
   field_category: true
   field_director: true
+  field_trailer_url: true
   field_year_of_release: true

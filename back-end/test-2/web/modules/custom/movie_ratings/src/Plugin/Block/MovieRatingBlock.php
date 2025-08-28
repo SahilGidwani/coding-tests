@@ -61,31 +61,42 @@ class MovieRatingBlock extends BlockBase implements ContainerFactoryPluginInterf
    */
   public function build() {
     // Get current node
-    $currentNode = $this->routeMatch->getParameter('node');
+    $node = $this->routeMatch->getParameter('node');
 
-    // Check if we're on a movie page
-    if (!$currentNode || $currentNode->bundle() !== 'movies') {
-      return []; // Don't show block on non-movie pages
+    // Check if current page is a movie page
+    if (!$node || $node->bundle() !== 'movies') {
+      return [];
     }
 
-    $movieId = $currentNode->id();
+    $movieId = $node->id();
 
     $averageRatings = $this->movieRating->getAverageRating($movieId);
 
     // Get rating form
     $form = \Drupal::formBuilder()->getForm(
-      'Drupal\movie_ratings\Form\MovieRatingForm',
-      $movie_id = $movieId
+      'Drupal\movie_ratings\Form\MovieRatingForm'
     );
 
     return [
       '#theme' => 'movie_rating_block',
-      '#movie_id' => $movie_id,
+      '#movie_id' => $movieId,
       '#average_rating' => $averageRatings['average'],
       '#total_votes' => $averageRatings['count'],
       '#rating_form' => $form,
       '#attached' => [
         'library' => ['movie_ratings/rating_form'],
+      ],
+      '#cache' => [
+        'contexts' => [
+          'route',
+          'ip',
+        ],
+        'tags' => [
+          'movie_ratings',
+          "movie_ratings:movie:{$movie_id}",
+          "node:{$movie_id}",
+        ],
+        'max-age' => 1800,
       ],
     ];
   }

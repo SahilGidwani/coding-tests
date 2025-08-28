@@ -9,7 +9,7 @@ _core:
 id: olivero_page_title
 theme: olivero
 region: content_above
-weight: -7
+weight: -9
 provider: null
 plugin: page_title_block
 settings:

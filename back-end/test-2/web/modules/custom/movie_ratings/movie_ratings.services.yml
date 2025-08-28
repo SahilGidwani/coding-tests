@@ -1,4 +1,8 @@
 services:
   movie_ratings.movie_rating_service:
     class: Drupal\movie_ratings\MovieRatingService
-    arguments: ['@database', '@current_user', '@request_stack', '@datetime.time', '@logger.factory']
+    arguments: ['@database', '@current_user', '@request_stack', '@datetime.time', '@logger.factory', '@cache.default']
+
+  movie_ratings.qr_code:
+    class: Drupal\movie_ratings\QRCodeService
+    arguments: ['@file_system', '@stream_wrapper_manager', '@logger.factory']

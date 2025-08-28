@@ -1,0 +1,16 @@
+<div class="movie-trailer-qr-block">
+  <div class="qr-code-section">
+    <div class="qr-code-container">
+      <img src="{{ qr_code_url }}"
+           alt="{{ 'QR Code for @title trailer'|t({'@title': movie_title}) }}"
+           class="qr-code-image" />
+    </div>
+
+    <div class="qr-instructions">
+      <p class="scan-text">
+        <strong>{{ 'Scan the QR code to watch the trailer of this movie.'|t }}</strong>
+      </p>
+    </div>
+
+  </div>
+</div>

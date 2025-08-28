@@ -11,6 +11,61 @@
   margin-bottom: 10px;
 }
 
+/* Hide the actual radio inputs */
+.movie-rating-radios input[type="radio"] {
+  display: none;
+}
+
+/* Style labels as stars */
+.movie-rating-radios label {
+  font-size: 24px;
+  color: #e9ecef;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s ease-in-out;
+  margin: 0;
+  padding: 0 !important;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+  margin-right: 5px;
+  float: left;
+}
+
+.movie-rating-radios label.hover-active {
+  color: #ffc107;
+}
+
+/* Checked state */
+.movie-rating-radios label.checked-active {
+  color: #ffc107;
+}
+
+.movie-rating-radios .fieldset__legend {
+    background: none;
+    margin: 0;
+}
+
+.movie-rating-radios .fieldset__legend .fieldset__label {
+    color: #0b0d0f;
+    padding: 0;
+}
+
+.movie-rating-radios .fieldset__wrapper {
+    border: none !important;
+    padding: 5px 0 0 0;
+}
+
+.movie-rating-radios .fieldset__wrapper > div {
+ direction: ltr; /* Change back to normal direction */
+}
+
+/* Clear floats */
+.movie-rating-radios .form-boolean-group::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
 /* Movie Rating Block Styles */
 .movie-rating-block {
   background: #f8f9fa;

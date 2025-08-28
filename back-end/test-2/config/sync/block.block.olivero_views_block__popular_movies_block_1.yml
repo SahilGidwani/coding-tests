@@ -1,0 +1,29 @@
+uuid: cdc51864-b091-4848-ab0e-e2407d98c6e1
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.popular_movies
+  module:
+    - system
+    - views
+  theme:
+    - olivero
+id: olivero_views_block__popular_movies_block_1
+theme: olivero
+region: sidebar
+weight: -8
+provider: null
+plugin: 'views_block:popular_movies-block_1'
+settings:
+  id: 'views_block:popular_movies-block_1'
+  label: ''
+  label_display: visible
+  provider: views
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: /movies

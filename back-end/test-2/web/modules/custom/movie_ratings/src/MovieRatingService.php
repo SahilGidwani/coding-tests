@@ -6,6 +6,8 @@ use Drupal\Core\Database\Connection;
 use Drupal\Core\Session\AccountInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Drupal\Component\Datetime\TimeInterface;
+use Drupal\Core\Cache\Cache;
+use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 
 
@@ -47,6 +49,13 @@ class MovieRatingService {
   protected $loggerFactory;
 
   /**
+   * Cache service
+   *
+   * @var \Drupal\Core\Cache\CacheBackendInterface
+   */
+  protected $cache;
+
+  /**
    * Construct MovieRating service object
    *
    * @param \Drupal\Core\Database\Connection $database
@@ -55,13 +64,14 @@ class MovieRatingService {
    * @param \Drupal\Component\Datetime\TimeInterface $timeObject
    * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $loggerFactory
    */
-  public function __construct(Connection $database, AccountInterface $user, RequestStack $request, TimeInterface $timeObject, LoggerChannelFactoryInterface $loggerFactory)
+  public function __construct(Connection $database, AccountInterface $user, RequestStack $request, TimeInterface $timeObject, LoggerChannelFactoryInterface $loggerFactory, CacheBackendInterface $cache)
   {
     $this->database = $database;
     $this->user = $user;
     $this->request = $request;
     $this->timeObject = $timeObject;
     $this->loggerFactory = $loggerFactory;
+    $this->cache = $cache;
   }
 
   /**
@@ -72,8 +82,7 @@ class MovieRatingService {
    *
    * @return array
    */
-  public function submitRating($movieId, $rating)
-  {
+  public function submitRating($movieId, $rating) {
     $userIp = $this->request->getCurrentRequest()->getClientIp();
 
     // Check if rating value is valid.
@@ -95,6 +104,10 @@ class MovieRatingService {
           'created' => $this->timeObject->getRequestTime()
         ])
         ->execute();
+
+      // Invalidate movie rating cache after new rating submission
+      $this->invalidateMovieCaches($movieId);
+
       return ['message' => 'Thankyou for sharing you rating', 'success' => TRUE];
     } catch (\Exception $e) {
       $this->loggerFactory->get('movie_ratings')->error('Rating submission failed: @err', ['@err' => $e->getMessage()]);
@@ -126,6 +139,13 @@ class MovieRatingService {
    * @param int $movieId
    */
   public function getAverageRating($movieId) {
+    $cacheKey = "movie_ratings:average:{$movieId}";
+    $cached = $this->cache->get($cacheKey);
+
+    if ($cached !== FALSE) {
+      return $cached->data;
+    }
+
     $searchQuery = $this->database->select('movie_ratings', 'mr')
       ->fields('mr', ['rating'])
       ->condition('movie_id', $movieId);
@@ -133,11 +153,27 @@ class MovieRatingService {
     $ratings = $searchQuery->execute()->fetchCol();
 
     if (empty($ratings)) {
-      return ['count' => 0, 'average' => 0];
+      $result = ['count' => 0, 'average' => 0];
+    } else {
+      $average = array_sum($ratings) / count($ratings);
+      $result = ['count' => count($ratings), 'average' => $average];
     }
 
-    $average = array_sum($ratings) / count($ratings);
-    return ['count' => count($ratings), 'average' => $average];
 
+    $this->cache->set($cacheKey, $result, \Drupal::time()->getRequestTime() + 1800, [
+      'movie_ratings',
+      "movie_ratings:movie:{$movieId}",
+    ]);
+
+    return $result
+
+  /**
+   * Invalidate all caches related to a movie.
+   */
+  protected function invalidateMovieCaches($movie_id) {
+
+    Cache::invalidateTags([
+      "movie_ratings:movie:{$movie_id}",  // Specific movie caches
+    ]);
   }
 }
