@@ -9,12 +9,11 @@
       rel="stylesheet"
     />
     <link href="src/css/output.css" rel="stylesheet" />
-    <script src="src/js/index.js" type="text/javascript"></script>
   </head>
 
   <body class="bg-white font-sans text-secondary">
     <header>
-      <nav class="container mx-auto">
+      <nav class="container mx-auto px-3 lg:px-[60px]">
         <div class="flex justify-between items-center py-6">
           <div class="logo">
             <img
@@ -24,7 +23,7 @@
             />
           </div>
           <!-- Desktop menu -->
-          <ul class="hidden md:flex gap-8 text-body items-center">
+          <ul class="hidden lg:flex gap-8 text-body items-center">
             <li><a href="#" class="text-zinc-600 hover:text-primary-dark">Products</a></li>
             <li><a href="#" class="text-zinc-600 hover:text-primary-dark">Pricing</a></li>
             <li><a href="#" class="text-zinc-600 hover:text-primary-dark">Solutions</a></li>
@@ -32,48 +31,41 @@
             <li><a href="#" class="text-zinc-600 hover:text-primary-dark">About</a></li>
           </ul>
           <!-- Desktop CTAs -->
-          <div class="hidden md:flex gap-4 items-center">
+          <div class="hidden lg:flex gap-4 items-center">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.48332 18.9667C7.6077 18.9667 5.77419 18.4105 4.21467 17.3684C2.65515 16.3264 1.43965 14.8453 0.721879 13.1124C0.00410906 11.3796 -0.183692 9.47281 0.182223 7.63322C0.548139 5.79364 1.45134 4.10387 2.7776 2.77761C4.10387 1.45134 5.79363 0.54814 7.63322 0.182224C9.4728 -0.183692 11.3796 0.00410906 13.1124 0.721879C14.8453 1.43965 16.3264 2.65515 17.3684 4.21468C18.4104 5.7742 18.9666 7.6077 18.9666 9.48333C18.9666 10.7287 18.7213 11.9619 18.2448 13.1124C17.7682 14.263 17.0696 15.3084 16.189 16.1891C15.3084 17.0697 14.263 17.7682 13.1124 18.2448C11.9619 18.7214 10.7287 18.9667 9.48332 18.9667ZM9.48332 1.72424C7.94872 1.72424 6.44858 2.17931 5.17261 3.03189C3.89663 3.88447 2.90213 5.09627 2.31487 6.51406C1.7276 7.93184 1.57395 9.49194 1.87333 10.9971C2.17272 12.5022 2.9117 13.8847 3.99682 14.9698C5.08195 16.055 6.46448 16.7939 7.9696 17.0933C9.47471 17.3927 11.0348 17.2391 12.4526 16.6518C13.8704 16.0645 15.0822 15.07 15.9348 13.794C16.7873 12.5181 17.2424 11.0179 17.2424 9.48333C17.2424 8.46439 17.0417 7.45543 16.6518 6.51406C16.2618 5.57268 15.6903 4.71733 14.9698 3.99683C14.2493 3.27633 13.394 2.7048 12.4526 2.31487C11.5112 1.92494 10.5023 1.72424 9.48332 1.72424Z" fill="currentColor"></path><path d="M22.5336 23.7495L14.8235 16.2354L16.0391 15.0198L23.7492 22.5339C23.9098 22.6954 23.9999 22.9139 23.9999 23.1417C23.9999 23.3694 23.9098 23.5879 23.7492 23.7495C23.5877 23.91 23.3692 24.0002 23.1414 24.0002C22.9137 24.0002 22.6952 23.91 22.5336 23.7495Z" fill="currentColor"></path></svg>
             <button class="text-body">Log in</button>
             <button class="btn btn-primary">Sign Up</button>
           </div>
+          <div class="flex items-center lg:hidden">
           <!-- Hamburger for Tablet/Mobile -->
-          <button
-            id="hamburger-menu"
-            class="md:hidden p-2 rounded focus:outline-none text-secondary"
-          >
-            <svg width="24" height="24" fill="none">
-              <rect y="5" width="24" height="2" fill="#2C2C2C" />
-              <rect y="11" width="24" height="2" fill="#2C2C2C" />
-              <rect y="17" width="24" height="2" fill="#2C2C2C" />
-            </svg>
+           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.48332 18.9667C7.6077 18.9667 5.77419 18.4105 4.21467 17.3684C2.65515 16.3264 1.43965 14.8453 0.721879 13.1124C0.00410906 11.3796 -0.183692 9.47281 0.182223 7.63322C0.548139 5.79364 1.45134 4.10387 2.7776 2.77761C4.10387 1.45134 5.79363 0.54814 7.63322 0.182224C9.4728 -0.183692 11.3796 0.00410906 13.1124 0.721879C14.8453 1.43965 16.3264 2.65515 17.3684 4.21468C18.4104 5.7742 18.9666 7.6077 18.9666 9.48333C18.9666 10.7287 18.7213 11.9619 18.2448 13.1124C17.7682 14.263 17.0696 15.3084 16.189 16.1891C15.3084 17.0697 14.263 17.7682 13.1124 18.2448C11.9619 18.7214 10.7287 18.9667 9.48332 18.9667ZM9.48332 1.72424C7.94872 1.72424 6.44858 2.17931 5.17261 3.03189C3.89663 3.88447 2.90213 5.09627 2.31487 6.51406C1.7276 7.93184 1.57395 9.49194 1.87333 10.9971C2.17272 12.5022 2.9117 13.8847 3.99682 14.9698C5.08195 16.055 6.46448 16.7939 7.9696 17.0933C9.47471 17.3927 11.0348 17.2391 12.4526 16.6518C13.8704 16.0645 15.0822 15.07 15.9348 13.794C16.7873 12.5181 17.2424 11.0179 17.2424 9.48333C17.2424 8.46439 17.0417 7.45543 16.6518 6.51406C16.2618 5.57268 15.6903 4.71733 14.9698 3.99683C14.2493 3.27633 13.394 2.7048 12.4526 2.31487C11.5112 1.92494 10.5023 1.72424 9.48332 1.72424Z" fill="currentColor"></path><path d="M22.5336 23.7495L14.8235 16.2354L16.0391 15.0198L23.7492 22.5339C23.9098 22.6954 23.9999 22.9139 23.9999 23.1417C23.9999 23.3694 23.9098 23.5879 23.7492 23.7495C23.5877 23.91 23.3692 24.0002 23.1414 24.0002C22.9137 24.0002 22.6952 23.91 22.5336 23.7495Z" fill="currentColor"></path></svg>
+          <button id="menu-toggle" class="relative w-10 h-10 flex flex-col items-center justify-center group z-50 lg:hidden">
+            <span class="block w-6 h-[3px] my-0.5 bg-secondary transition-transform duration-300 ease-in-out hamburger-bar"></span>
+            <span class="block w-6 h-[3px] my-0.5 bg-secondary transition-all duration-300 ease-in-out hamburger-bar"></span>
+            <span class="block w-6 h-[3px] my-0.5 bg-secondary transition-transform duration-300 ease-in-out hamburger-bar"></span>
           </button>
+          </div>
         </div>
       </nav>
       <!-- Mobile/Tablet Popup Drawer -->
       <div
         id="mobile-menu"
-        class="fixed inset-0 bg-white bg-opacity-95 z-50 flex flex-col items-center justify-center space-y-8 text-link hidden"
+        class="fixed left-0 right-0 top-[72px] bottom-0 bg-white z-50 flex flex-col hidden lg:hidden"
       >
-        <button
-          id="close-menu"
-          class="absolute top-7 right-7 text-h1 font-bold bg-blue text-white rounded-full w-12 h-12 flex items-center justify-center"
-        >
-          &times;
-        </button>
-        <ul class="flex flex-col gap-7 text-h3 ">
-          <li><a class="text-zinc-600 hover:text-primary-dark" href="#">Products</a></li>
-          <li><a class="text-zinc-600 hover:text-primary-dark" href="#">Pricing</a></li>
-          <li><a class="text-zinc-600 hover:text-primary-dark" href="#">Solutions</a></li>
-          <li><a class="text-zinc-600 hover:text-primary-dark" href="#">Help Center</a></li>
-          <li><a class="text-zinc-600 hover:text-primary-dark" href="#">About</a></li>
+        <ul class="flex flex-col divide-y divide-gray-200 text-left w-full">
+          <li><a class="block px-4 py-3 font-medium bg-white" href="#">Products</a></li>
+          <li><a class="block px-4 py-3 font-medium bg-white" href="#">Pricing</a></li>
+          <li><a class="block px-4 py-3 font-medium bg-white" href="#">Solutions</a></li>
+          <li><a class="block px-4 py-3 font-medium bg-white" href="#">Help Center</a></li>
+          <li><a class="block px-4 py-3 font-medium bg-white" href="#">About</a></li>
         </ul>
-        <div class="flex flex-col gap-4 w-full mt-8 px-10">
+        <div class="w-full px-4 py-4 mt-auto border-t border-gray-200 flex gap-3 bg-white">
           <button
-            class="font-link bg-primary text-white px-5 py-2 rounded tablet"
+            class="btn btn-secondary flex-[0_0_50%] flex items-center justify-center"
           >
             Log in
           </button>
-          <button class="font-link bg-teal text-white px-5 py-2 rounded tablet">
+          <button class="btn btn-primary flex-[0_0_50%] flex items-center justify-center">
             Sign up
           </button>
         </div>
@@ -84,7 +76,7 @@
         <div class="text-center">
           <h1 class="text-h1 text-center">
             <span class="block md:hidden">Simple usage-based pricing</span>
-            <span class="hidden md:block">NewSimple, transparent pricing plans.<br />Only pay for what you use.</span>
+            <span class="hidden md:block">Simple, transparent pricing plans.<br />Only pay for what you use.</span>
           </h1>
           <p class="text-center mt-8 text-zinc-500">
             <span class="block md:hidden">Start for free. Then pay a predictable per-user price and $0.25 per GB as your needs grow.</span>
@@ -96,7 +88,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-0 mb-8 [grid-template-rows:repeat(6,_auto)] lg:shadow-2xl lg:rounded-lg">
           <div class="pricing-card lg:rounded-r-none overflow-hidden">
             <h2 class="text-white bg-teal px-8 py-6">Free</h2>
-            <div class="text-sm description px-8 py-9 lg:py-8">
+            <div class="text-sm description px-8 py-9 lg:py-8 lg:text-base">
               For individuals just getting started with New Relic or test
               projects.
             </div>
@@ -138,7 +130,7 @@
           </div>
           <div class="pricing-card lg:rounded-none overflow-hidden">
             <h2 class="text-white  bg-blue px-8 py-6">Standard</h2>
-            <div class="text-sm description p-8 py-9 lg:py-8">
+            <div class="text-sm description p-8 py-9 lg:py-8 lg:text-base">
               For growing teams monitoring production apps.
             </div>
             <div class="cost px-8 pb-4">
@@ -180,7 +172,7 @@
           </div>
           <div class="pricing-card lg:rounded-none overflow-hidden">
             <h2 class="text-white  bg-orange px-8 py-6">Pro</h2>
-            <div class="text-sm description p-8">
+            <div class="text-sm description p-8 lg:text-base">
               For teams and companies with more than 5 engineers and complex
               workloads.
             </div>
@@ -220,7 +212,7 @@
             <h2 class="text-white  bg-secondary px-8 py-6 ">
               Enterprise
             </h2>
-            <div class="text-sm description p-8">
+            <div class="text-sm description p-8 lg:text-base">
               For companies with advanced security and support needs.
             </div>
             <div class="cost px-8 pb-4">
@@ -282,27 +274,27 @@
           <div class="grid grid-cols-6">
             <div class="col-span-2 h-[72px] plans-table-column"></div>
             <div
-              class="border-t-[5px] border-t-teal bg-gray-100 plans-table-column"
+              class="border-t-[5px] border-t-teal bg-gray-100 plans-table-column font-semibold"
             >
               <span class="">Free</span>
             </div>
             <div
-              class="border-t-[5px] border-t-blue bg-gray-100 border-l border-x-white plans-table-column"
+              class="border-t-[5px] border-t-blue bg-gray-100 border-l border-x-white plans-table-column font-semibold"
             >
               <span class="">Standard</span>
             </div>
             <div
-              class="border-t-[5px] border-t-orange bg-gray-100 border-l border-x-white plans-table-column"
+              class="border-t-[5px] border-t-orange bg-gray-100 border-l border-x-white plans-table-column font-semibold"
             >
               <span class="">Pro</span>
             </div>
             <div
-              class="border-t-[5px] border-t-secondary bg-gray-100 border-l border-x-white plans-table-column"
+              class="border-t-[5px] border-t-secondary bg-gray-100 border-l border-x-white plans-table-column font-semibold"
             >
               <span class="">Enterprise</span>
             </div>
             <div class="col-span-6 pt-11 pb-5 border-b border-b-gray-200">
-              <span class=" uppercase text-xs">Data Usage</span>
+              <span class=" uppercase text-xs font-semibold">Data Usage</span>
             </div>
             <div class="col-span-2 plans-table-column h-[72px] justify-normal">
               <span class="">Free limits</span>
@@ -382,7 +374,7 @@
           </div>
         </div>
       </section>
-      <section class="logos container mx-auto pt-20 lg:pt-12 pb-12 lg:pb-24">
+      <section class="logos container mx-auto pt-20 lg:pt-24 pb-12 lg:pb-24">
         <div class="grid grid-cols-2 md:grid-cols-5 flex-wrap gap-y-16 lg:gap-12">
           <div >
             <img
@@ -1000,4 +992,5 @@
       </div>
     </footer>
   </body>
+   <script src="src/js/index.js" type="text/javascript"></script>
 </html>
