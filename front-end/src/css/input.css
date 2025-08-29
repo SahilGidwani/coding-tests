@@ -1,3 +1,81 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .btn {
+    @apply py-2 px-6 rounded border transition duration-300 ease-in-out text-body text-center;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-white border-primary-dark hover:bg-primary-dark;
+  }
+
+  .btn-secondary {
+    @apply bg-transparent text-primary border-primary-dark hover:bg-primary-dark hover:text-white;
+  }
+
+  .pricing-card {
+    @apply border rounded-lg border-[#cbcfcf] grid grid-rows-subgrid row-span-6 gap-y-0 overflow-hidden shadow-2xl lg:shadow-none;
+  }
+
+  .features-list {
+    @apply list-image-[url("/src/images/checkmark.svg")] pl-5 text-sm;
+  }
+
+  .plans-table-column {
+    @apply border-b border-b-gray-200 flex items-center justify-center;
+  }
+
+  .plans-table-data-column {
+    @apply border-l border-l-gray-200 h-[72px] flex items-center justify-center text-center text-sm;
+  }
+
+  .plans-table-data-column.supported {
+    @apply bg-[url('/src/images/tick-circle.svg')] bg-no-repeat bg-center;
+  }
+
+  .plans-table-data-column.unsupported {
+    @apply bg-[url('/src/images/cross-circle.svg')] bg-no-repeat bg-center;
+  }
+
+  .read-more-arrow {
+    @apply after:inline-block after:w-[9px] after:h-[9px] after:relative after:border-t after:border-r after:border-primary after:rotate-45 after:ml-[2px] after:mb-[1px];
+  }
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  color: #2c2c2c;
+}
+
+/* Custom grid-area definitions */
+.footer-grid {
+  @apply grid gap-y-12 lg:gap-y-14 lg:gap-6 pb-16 border-b border-gray-400 grid-cols-1 md:grid-cols-12 gap-x-6;
+  grid-template-areas:
+    "a"
+    "c"
+    "s";
+}
+
+@media (min-width: 768px) {
+  .footer-grid {
+    grid-template-areas:
+      "a a a a a a . c c c c c"
+      "s s s s . . . c c c c c";
+  }
+}
+@media (min-width: 1024px) {
+  .footer-grid {
+    grid-template-areas: "a a a a . c c c c . s s";
+  }
+}
+.about {
+  grid-area: a;
+}
+.company {
+  grid-area: c;
+}
+.social {
+   grid-area: s;
+}
