@@ -83,7 +83,7 @@ class MovieRatingForm extends FormBase {
 
     $movieId = $movie_id ?? $currentNode->id();
 
-    // Form wrapper for targetting ajax response after form submit.
+    // Form wrapper.
     $form['#prefix'] = '<div id="movie-rating-form-wrapper">';
     $form['#suffix'] = '</div>';
 
