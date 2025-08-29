@@ -19,7 +19,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class MovieRatingBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
-
   /**
    * Route match object.
    *
@@ -28,7 +27,7 @@ class MovieRatingBlock extends BlockBase implements ContainerFactoryPluginInterf
   protected $routeMatch;
 
   /**
-   * Movie rating service object
+   * Movie rating service object.
    *
    * @var \Drupal\movie_ratings\MovieRatingService
    */
@@ -60,10 +59,10 @@ class MovieRatingBlock extends BlockBase implements ContainerFactoryPluginInterf
    * {@inheritdoc}
    */
   public function build() {
-    // Get current node
+    // Get current node.
     $node = $this->routeMatch->getParameter('node');
 
-    // Check if current page is a movie page
+    // Check if current page is a movie page.
     if (!$node || $node->bundle() !== 'movies') {
       return [];
     }
@@ -72,7 +71,7 @@ class MovieRatingBlock extends BlockBase implements ContainerFactoryPluginInterf
 
     $averageRatings = $this->movieRating->getAverageRating($movieId);
 
-    // Get rating form
+    // Get rating form.
     $form = \Drupal::formBuilder()->getForm(
       'Drupal\movie_ratings\Form\MovieRatingForm'
     );
@@ -93,8 +92,7 @@ class MovieRatingBlock extends BlockBase implements ContainerFactoryPluginInterf
         ],
         'tags' => [
           'movie_ratings',
-          "movie_ratings:movie:{$movie_id}",
-          "node:{$movie_id}",
+          "movie_ratings:movie:{$movieId}",
         ],
         'max-age' => 1800,
       ],

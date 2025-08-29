@@ -29,7 +29,7 @@ class QRCodeService {
   protected $streamWrapperManager;
 
   /**
-   * Logger object
+   * Logger object.
    *
    * @var \Drupal\Core\Logger\LoggerChannelFactoryInterface
    */
@@ -37,6 +37,13 @@ class QRCodeService {
 
   /**
    * Constructs a QrCodeService object.
+   *
+   * @param \Drupal\Core\File\FileSystemInterface $file_system
+   *   The file system service object.
+   * @param \Drupal\Core\StreamWrapper\StreamWrapperManagerInterface $stream_wrapper_manager
+   *   The stream wrapper manager object.
+   * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $logger
+   *   The logger object.
    */
   public function __construct(FileSystemInterface $file_system, StreamWrapperManagerInterface $stream_wrapper_manager, LoggerChannelFactoryInterface $logger) {
     $this->fileSystem = $file_system;
@@ -48,18 +55,23 @@ class QRCodeService {
    * Generate QR code for a URL.
    *
    * @param string $url
+   *   The URL to generate a QR code for.
    * @param string $filename
+   *   The filename of the generated QR code, without extension.
    *
    * @return string|null
+   *   The URL of the generated QR code, or NULL if generation failed.
    */
   public function generateQrCode($url, $filename) {
     if (empty($url)) {
       return NULL;
     }
 
+    // Sanitize filename.
     $filename = preg_replace('/[^a-zA-Z0-9_-]/', '_', $filename);
 
     try {
+      // Create QR code builder object passing in required parameters..
       $builder = new Builder(
         writer: new PngWriter(),
         data: $url,
@@ -70,28 +82,33 @@ class QRCodeService {
 
       $result = $builder->build();
 
-      // Prepare directory for uploading generated QR codes.
       $directory = 'public://qr-codes';
 
-      // Check if directory is created.
+      // Check if directory is created then only proceed with next steps.
       if (!$this->fileSystem->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY)) {
         $this->logger->get('movie_ratings')->error('Failed to create QR code directory');
         return NULL;
       }
 
-      // Save generated QR code image
       $file_uri = $directory . '/' . $filename . '.png';
 
-      // Check if file is saved.
+      // Check if QR code already exists.
+      $realpath = $this->fileSystem->realpath($file_uri);
+      if ($realpath && file_exists($realpath)) {
+        return $this->streamWrapperManager->getViaUri($file_uri)->getExternalUrl();
+      }
+
+      // Check if file is saved then only proceed with next steps.
       if (!$this->fileSystem->saveData($result->getString(), $file_uri, FileSystemInterface::EXISTS_REPLACE)) {
         $this->logger->get('movie_ratings')->error('Failed to save QR code file');
         return NULL;
       }
 
-      // Return the url of QR Code.
+      // Finally return the url of saved QR Code.
       return $this->streamWrapperManager->getViaUri($file_uri)->getExternalUrl();
 
-    } catch (\Exception $e) {
+    }
+    catch (\Exception $e) {
       $this->logger->get('movie_ratings')->error('QR code generation failed: @error', ['@error' => $e->getMessage()]);
       return NULL;
     }

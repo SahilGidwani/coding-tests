@@ -1,15 +1,25 @@
+{#
+# Movie Rating Block
+#
+# This template displays the current movie rating, as well as a form to rate the movie.
+#
+#}
+
 <div class="movie-rating-block">
   <h3 class="rating-title">{{ 'Rate this Movie'|t }}</h3>
 
-  {# Current Rating Display #}
+  {# If there are already ratings, display the current average rating. #}
   {% if total_votes > 0 %}
     <div class="current-rating">
       <div class="star-display">
+        {#
+        # Loop through 5 stars and fill them if the current rating is higher or equal to the loop counter
+        #}
         {% for i in 1..5 %}
           {% if i <= average_rating %}
             <span class="star filled">★</span>
           {% else %}
-            <span class="star empty">☆</span>
+            <span class="star empty">★</span>
           {% endif %}
         {% endfor %}
       </div>
@@ -26,17 +36,29 @@
       </div>
     </div>
   {% else %}
+    {#
+    # No Ratings Yet
+    #
+    # If there are no ratings yet, display a message and empty stars.
+    #}
     <div class="no-rating">
       <div class="star-display">
+        {#
+        # Loop through 5 stars and display them empty
+        #}
         {% for i in 1..5 %}
-          <span class="star empty">☆</span>
+          <span class="star empty">★</span>
         {% endfor %}
       </div>
       <p class="no-votes">{{ 'No ratings yet. Be the first to rate!'|t }}</p>
     </div>
   {% endif %}
 
-  {# Rating Form #}
+  {#
+  # Rating Form
+  #
+  # Display the rating form.
+  #}
   <div class="rating-form-container">
     {{ rating_form }}
   </div>

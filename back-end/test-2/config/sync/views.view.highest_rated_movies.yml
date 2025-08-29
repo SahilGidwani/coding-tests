@@ -5,6 +5,7 @@ dependencies:
   module:
     - movie_ratings
     - node
+    - views_custom_cache_tag
 id: highest_rated_movies
 label: 'Highest Rated Movies'
 module: views
@@ -162,8 +163,9 @@ display:
         type: none
         options: {  }
       cache:
-        type: tag
-        options: {  }
+        type: custom_tag
+        options:
+          custom_tag: 'movie_ratings:highest_rated'
       empty: {  }
       sorts:
         rating:

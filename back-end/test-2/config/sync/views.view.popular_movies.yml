@@ -5,6 +5,7 @@ dependencies:
   module:
     - movie_ratings
     - node
+    - views_custom_cache_tag
 id: popular_movies
 label: 'Popular Movies'
 module: views
@@ -75,7 +76,7 @@ display:
           click_sort_column: value
           type: string
           settings:
-            link_to_entity: false
+            link_to_entity: true
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -162,8 +163,9 @@ display:
         type: none
         options: {  }
       cache:
-        type: tag
-        options: {  }
+        type: custom_tag
+        options:
+          custom_tag: 'movie_ratings:popular'
       empty: {  }
       sorts:
         rating:

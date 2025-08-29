@@ -5,6 +5,8 @@
  * Primary module hooks for Movie Ratings module.
  */
 
+use Drupal\views\ViewExecutable;
+
 /**
  * Implements hook_views_data().
  *
@@ -45,7 +47,13 @@ function movie_ratings_views_data() {
       'id' => 'standard',
     ],
     'filter' => [
-      'id' => 'numeric',
+      'id' => 'movie_rating_select',
+      'allow empty' => TRUE,
+      'empty_value' => '',
+      'expose' => [
+        'label' => t('Filter by rating'),
+        'operator' => FALSE,
+      ],
     ],
   ];
 

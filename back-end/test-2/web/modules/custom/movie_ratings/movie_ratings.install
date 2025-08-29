@@ -7,9 +7,9 @@
 
 /**
  * Implements hook_schema()
+ * Defines the movie_ratings table which stores the ratings for each movie.
  */
-function movie_ratings_schema()
-{
+function movie_ratings_schema() {
   $schema['movie_ratings'] = [
     'description' => 'Schema for storing movie ratings',
     'fields' => [

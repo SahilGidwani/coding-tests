@@ -21,16 +21,20 @@ class TrailerQrBlock extends BlockBase implements ContainerFactoryPluginInterfac
 
   /**
    * The route match.
+   *
+   * @var \Drupal\Core\Routing\RouteMatchInterface
    */
   protected $routeMatch;
 
   /**
    * The QR code service.
+   *
+   * @var \Drupal\movie_ratings\QRCodeService
    */
   protected $qrCodeService;
 
   /**
-   * Constructs a new MovieTrailerQrBlock instance.
+   * Constructs a new TrailerQrBlock instance.
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, RouteMatchInterface $route_match, QRCodeService $qr_code_service) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
@@ -62,7 +66,7 @@ class TrailerQrBlock extends BlockBase implements ContainerFactoryPluginInterfac
       return [];
     }
 
-    // Check if movie has trailer URL
+    // Check if movie has trailer URL.
     if (!$currentNode->hasField('field_trailer_url') || $currentNode->get('field_trailer_url')->isEmpty()) {
       return [];
     }
@@ -70,24 +74,24 @@ class TrailerQrBlock extends BlockBase implements ContainerFactoryPluginInterfac
     $movieId = $currentNode->id();
     $trailerUrl = $currentNode->get('field_trailer_url')->first()->getUrl()->toString();
 
-    // Validate YouTube URL
+    // Validate YouTube URL.
     if (!$this->qrCodeService->isYouTubeUrl($trailerUrl)) {
       return [
         '#markup' => '<p class="trailer-error">' .
-          $this->t('Invalid trailer URL. Please provide a valid YouTube link.') .
-          '</p>',
+        $this->t('Invalid trailer URL. Please provide a valid YouTube link.') .
+        '</p>',
       ];
     }
 
-    // Generate QR code
+    // Generate QR code.
     $qrFilename = 'movie_' . $movieId . '_trailer';
     $qrCodeUrl = $this->qrCodeService->generateQrCode($trailerUrl, $qrFilename);
 
     if (!$qrCodeUrl) {
       return [
         '#markup' => '<p class="qr-error">' .
-          $this->t('Unable to generate QR code at this time.') .
-          '</p>',
+        $this->t('Unable to generate QR code at this time.') .
+        '</p>',
       ];
     }
 
@@ -99,12 +103,11 @@ class TrailerQrBlock extends BlockBase implements ContainerFactoryPluginInterfac
         'library' => ['movie_ratings/rating_styles'],
       ],
       '#cache' => [
-        'contexts' => ['route'],
         'tags' => [
           "node:{$movieId}",
           'trailer_qr',
         ],
-        'max-age' => 3600, // Cache for 1 hour
+        'max-age' => 86400,
       ],
     ];
   }

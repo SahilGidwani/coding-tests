@@ -6,66 +6,76 @@ use Drupal\Core\Database\Connection;
 use Drupal\Core\Session\AccountInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Drupal\Component\Datetime\TimeInterface;
-use Drupal\Core\Cache\Cache;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 
-
+/**
+ * Class MovieRatingService.
+ *
+ * Provides an API for submitting ratings and retrieving average ratings for
+ * movies.
+ */
 class MovieRatingService {
 
   /**
-   * Databse connection
+   * Database connection.
    *
    * @var \Drupal\Core\Database\Connection
    */
   protected $database;
 
   /**
-   * Current user
+   * Current user.
    *
    * @var \Drupal\Core\Session\AccountInterface
    */
   protected $user;
 
   /**
-   * Request stack
+   * Request stack.
    *
    * @var \Symfony\Component\HttpFoundation\RequestStack
    */
   protected $request;
 
   /**
-   * Time service
+   * Time service.
    *
    * @var \Drupal\Component\Datetime\TimeInterface
    */
   protected $timeObject;
 
   /**
-   * Logger factory
+   * Logger factory.
    *
    * @var \Drupal\Core\Logger\LoggerChannelFactoryInterface
    */
   protected $loggerFactory;
 
   /**
-   * Cache service
+   * Cache service.
    *
    * @var \Drupal\Core\Cache\CacheBackendInterface
    */
   protected $cache;
 
   /**
-   * Construct MovieRating service object
+   * Construct MovieRating service object.
    *
    * @param \Drupal\Core\Database\Connection $database
+   *   Database connection.
    * @param \Drupal\Core\Session\AccountInterface $user
+   *   Current user.
    * @param \Symfony\Component\HttpFoundation\RequestStack $request
+   *   Request stack.
    * @param \Drupal\Component\Datetime\TimeInterface $timeObject
+   *   Time service.
    * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $loggerFactory
+   *   Logger factory.
+   * @param \Drupal\Core\Cache\CacheBackendInterface $cache
+   *   Cache service.
    */
-  public function __construct(Connection $database, AccountInterface $user, RequestStack $request, TimeInterface $timeObject, LoggerChannelFactoryInterface $loggerFactory, CacheBackendInterface $cache)
-  {
+  public function __construct(Connection $database, AccountInterface $user, RequestStack $request, TimeInterface $timeObject, LoggerChannelFactoryInterface $loggerFactory, CacheBackendInterface $cache) {
     $this->database = $database;
     $this->user = $user;
     $this->request = $request;
@@ -75,12 +85,15 @@ class MovieRatingService {
   }
 
   /**
-   * This function implements rating submission for a movie
+   * This function implements rating submission for a movie.
    *
-   * @param int $movie_id
+   * @param int $movieId
+   *   Movie ID.
    * @param int $rating
+   *   Rating value.
    *
    * @return array
+   *   Response array containing message and success status.
    */
   public function submitRating($movieId, $rating) {
     $userIp = $this->request->getCurrentRequest()->getClientIp();
@@ -101,15 +114,16 @@ class MovieRatingService {
           'movie_id' => $movieId,
           'rating' => $rating,
           'user_ip' => $userIp,
-          'created' => $this->timeObject->getRequestTime()
+          'created' => $this->timeObject->getRequestTime(),
         ])
         ->execute();
 
-      // Invalidate movie rating cache after new rating submission
+      // Invalidate movie rating cache after new rating submission.
       $this->invalidateMovieCaches($movieId);
 
-      return ['message' => 'Thankyou for sharing you rating', 'success' => TRUE];
-    } catch (\Exception $e) {
+      return ['message' => 'Thankyou for sharing your rating', 'success' => TRUE];
+    }
+    catch (\Exception $e) {
       $this->loggerFactory->get('movie_ratings')->error('Rating submission failed: @err', ['@err' => $e->getMessage()]);
       return ['message' => 'Failed to submit rating.', 'success' => FALSE];
     }
@@ -117,6 +131,15 @@ class MovieRatingService {
 
   /**
    * This function checks if user has already rated the movie with current IP.
+   *
+   * @param int $movieId
+   *   Movie ID.
+   * @param string $userIp
+   *   User IP.
+   *
+   * @return bool
+   *   TRUE if user has already rated the movie with current IP,
+   *   FALSE otherwise.
    */
   public function hasUserAlreadyRated($movieId, $userIp = NULL) {
 
@@ -130,19 +153,27 @@ class MovieRatingService {
       ->condition('user_ip', $userIp)
       ->countQuery();
 
-    // If query returns result then return TRUE otherwise return FALSE
+    // If query returns result then return TRUE otherwise return FALSE.
     return $searchQuery->execute()->fetchField() > 0;
   }
 
   /**
-   * This function queries through the table and calculate the average rating for a movie.
+   * Get average rating of a movie.
+   *
+   * This function queries through the table and
+   *  calculate the average rating for a movie.
+   *
    * @param int $movieId
+   *   Movie ID.
+   *
+   * @return array
+   *   Array containing count and average rating.
    */
   public function getAverageRating($movieId) {
     $cacheKey = "movie_ratings:average:{$movieId}";
     $cached = $this->cache->get($cacheKey);
 
-    if ($cached !== FALSE) {
+    if ($cached != FALSE) {
       return $cached->data;
     }
 
@@ -154,26 +185,33 @@ class MovieRatingService {
 
     if (empty($ratings)) {
       $result = ['count' => 0, 'average' => 0];
-    } else {
+    }
+    else {
       $average = array_sum($ratings) / count($ratings);
       $result = ['count' => count($ratings), 'average' => $average];
     }
 
-
-    $this->cache->set($cacheKey, $result, \Drupal::time()->getRequestTime() + 1800, [
-      'movie_ratings',
+    $this->cache->set($cacheKey, $result, $this->timeObject->getRequestTime() + 1800, [
       "movie_ratings:movie:{$movieId}",
     ]);
 
-    return $result
+    return $result;
+  }
 
   /**
    * Invalidate all caches related to a movie.
+   *
+   * @param int $movieId
+   *   Movie ID.
    */
-  protected function invalidateMovieCaches($movie_id) {
+  protected function invalidateMovieCaches($movieId) {
 
-    Cache::invalidateTags([
-      "movie_ratings:movie:{$movie_id}",  // Specific movie caches
+    \Drupal::service('cache_tags.invalidator')->invalidateTags([
+      "node:{$movieId}",
+      "movie_ratings:movie:{$movieId}",
+      "movie_ratings:popular",
+      "movie_ratings:highest_rated",
     ]);
   }
+
 }
